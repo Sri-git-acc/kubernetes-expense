@@ -1,0 +1,39 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: backend
+  namespace: expense
+  labels:
+    app: backend
+    project: expense
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+      project: expense
+  template:
+    metadata:
+      labels:
+        app: backend
+        project: expense
+    spec:
+      containers:
+      - name: nginx
+        image: sriyaragala/backend:1.0.0
+
+---
+
+kind: Service
+apiVersion: v1
+metadata: 
+  name: backend
+  namespace: expense
+spec:
+  selector:
+    app: backend
+    project: expense
+  ports:
+    protocol: TCP
+    port: 8080
+    targetPort: 8080

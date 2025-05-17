@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: frontend
+  namespace: expense
+  labels:
+    app: frontend
+    project: expense
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels:
+      app: backend
+      project: expense
+  template:
+    metadata:
+      labels:
+        app: backend
+        project: expense
+    spec:
+      containers:
+      - name: nginx
+        image: sriyaragala/frontend:1.0.0
+        ports:
+        - containerPort: 8080
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontend
+  namespace: expense
+spec: 
+  type: LoadBalancer
+  selector:
+    app: backend
+    project: expense
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
