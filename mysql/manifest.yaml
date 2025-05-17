@@ -34,6 +34,6 @@ spec:
     app: mysql
     project: expense
   ports:
-    protocol: TCP
+  - protocol: TCP
     port: 3306
     targetPort: 3306
